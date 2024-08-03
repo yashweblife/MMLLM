@@ -48,7 +48,7 @@ app.post('/image',async (req,res)=>{
     const messages = [
         {
             role:'user',
-            content:'What is in this picture?',
+            content:'What action is going on in the image',
             images:[prompt]
         }
     ]
