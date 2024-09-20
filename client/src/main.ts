@@ -1,13 +1,13 @@
 import './style.css';
 
 
-fetch('http://localhost:3300/chat', {
-  method: 'post',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({ prompt: 'hello' })
-}).then((res) => res.json()).then((data) => console.log(data))
+// fetch('http://localhost:3300/chat', {
+//   method: 'post',
+//   headers: {
+//     'Content-Type': 'application/json',
+//   },
+//   body: JSON.stringify({ prompt: 'hello' })
+// }).then((res) => res.json()).then((data) => console.log(data))
 
 // create a drawing app
 
@@ -18,8 +18,8 @@ function app() {
   const streamButton = document.querySelector('#stream-button') as HTMLButtonElement;
   const clearButton = document.querySelector('#clear-button') as HTMLButtonElement;
   const c = canvas.getContext('2d') as CanvasRenderingContext2D;
-  canvas.width = 300;
-  canvas.height = 300;
+  canvas.width = 200;
+  canvas.height = 200;
   c.beginPath();
   c.fillStyle = 'white';
   c.fillRect(0, 0, canvas.width, canvas.height);
@@ -56,7 +56,7 @@ function app() {
     }).then((res) => res.json()).then((data) => console.log(data))
   });
   streamButton.addEventListener('click', () => {
-    c.drawImage(stream, 0, 0, 200, 200)
+    c.drawImage(stream, 0, 0, canvas.width, canvas.height);
     const dataUrl = canvas.toDataURL('image/jpeg');
     const final = dataUrl.split(',')[1]
     fetch('http://localhost:3300/image', {
@@ -64,7 +64,7 @@ function app() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ prompt:final })
+      body: JSON.stringify({ prompt:'what is in this image', image: final })
     })
     .then((res) => res.json()).then((data) => {
       console.log(data.message.content)
